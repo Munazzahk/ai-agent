@@ -150,34 +150,19 @@ def matches_constraints(paper, constraints):
 # STEP 3: TOPIC RELEVANCE FILTER
 # =========================
 def is_topic_relevant(paper, topic):
-
     text = (
-        paper.get("title", "") + " " +
+        (paper.get("title") or "") + " " +
         (paper.get("abstract") or "")
     ).lower()
 
-    # Normalize
-    topic = topic.lower().replace("-", " ")
+    topic = topic.lower()
 
-    # Strong phrase match first
-    if topic in text:
-        return True
+    keywords = topic.replace("-", " ").split()
 
-    # Important keywords only
-    topic_words = [
-        w for w in topic.split()
-        if len(w) > 4
-    ]
+    score = sum(1 for k in keywords if k in text)
 
-    # Count keyword matches
-    matches = sum(
-        1 for word in topic_words
-        if word in text
-    )
-
-    # Require MOST keywords
-    return matches >= max(2, len(topic_words) - 1)
-
+    # stricter rule
+    return score >= max(2, len(keywords) // 2)
 
 # =========================
 # STEP 4: GENERATE EXPLANATION
