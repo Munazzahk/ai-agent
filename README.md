@@ -39,6 +39,8 @@ pip install -r requirements.txt
 # 4. Add .env file and Mistral key
 Create an `.env` file in root
 Add: MISTRAL_API_KEY=your_api_key_here
+You can obtain an API key from Mistral AI platform 
+Replace your_api_key_here with the actual key you obtained
 Save changes
 
 # 5. Run the AI agent
@@ -73,4 +75,5 @@ The system performs well when:
 
 It struggles when:
 - queries are abstract (fx. "AI planning")
-- same words are used in different contexts
+- abstract queries sometimes return irrelevant papers
+- some topic mismatches happen
